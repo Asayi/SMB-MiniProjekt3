@@ -34,15 +34,6 @@ class ProductListActivity : AppCompatActivity() {
         binding.tvNazwaListy2.text = intent.getStringExtra("nazwa_zmiana")
         sharedPreferences = getSharedPreferences("nazwa_zmiana", Context.MODE_PRIVATE)
 
-//        val viewModel = ProduktViewModel(application)
-//        val adapter = MyAdapter(viewModel)
-//
-//        viewModel.allProducts.observe(this, Observer {
-//            it.let {
-//                adapter.setProductList(it)
-//            }
-//        })
-
         val database = FirebaseDatabase.getInstance()
         val ref = database.getReference("Produkt")
 
@@ -57,28 +48,6 @@ class ProductListActivity : AppCompatActivity() {
         val list = arrayListOf<Produkt>()
         binding.rvList.adapter = MyAdapter(this, list, ref)
 
-//        binding.btDodusu.setOnClickListener {
-//
-//            val produktAdd : Produkt = Produkt(
-//                    nazwa = binding.etNazwaprod.text.toString(),
-//                    cena = binding.etCena.text.toString(),
-//                    ilosc = binding.etIlosc.text.toString(),
-//                    kupuony = binding.cbKupiony2.isChecked
-//            )
-//
-////            val id = viewModel.addProduct(produktAdd)
-//
-//            val broadcast = Intent(getString(R.string.addProduct))
-//            broadcast.component = ComponentName("com.example.miniproject2", "com.example.miniproject2.AddProductReceiver")
-//
-////            broadcast.putExtra("idProd", id)
-//            broadcast.putExtra("nazwaProd", produktAdd.nazwa)
-//            broadcast.putExtra("cenaProd", produktAdd.cena)
-//            broadcast.putExtra("iloscProd", produktAdd.ilosc)
-//
-//            sendBroadcast(broadcast)
-//        }
-
         binding.btDodusu.setOnClickListener {
 
             val produkt = Produkt (
@@ -90,6 +59,9 @@ class ProductListActivity : AppCompatActivity() {
 
             CoroutineScope(Dispatchers.IO).launch {
                 ref.push().setValue(produkt)
+//                if (produkt.kupuony == true) {
+//
+//                }
             }
         }
     }

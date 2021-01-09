@@ -20,10 +20,6 @@ class MyAdapter(val context: Context, val list: ArrayList<Produkt>, val ref: Dat
         ref.addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                var name: String
-                var price: String
-                var quantity: String
-                var kupiony: Boolean = false
 
                 CoroutineScope(IO).launch {
 
@@ -42,11 +38,19 @@ class MyAdapter(val context: Context, val list: ArrayList<Produkt>, val ref: Dat
             }
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 CoroutineScope(IO).launch {
-//                    list.remove(snapshot.value as String)
-//                    list.add(snapshot.value as String)
-//                    withContext(Main) {
-//                        notifyDataSetChanged()
-//                    }
+
+                    val produkt = Produkt(
+                        snapshot.child("nazwa").value as String,
+                        snapshot.child("cena").value as String,
+                        snapshot.child("ilosc").value as String,
+                        false
+                    )
+
+                    list.remove(snapshot.value as String)
+                    list.add(produkt)
+                    withContext(Main) {
+                        notifyDataSetChanged()
+                    }
                 }
             }
             override fun onChildRemoved(snapshot: DataSnapshot) {
@@ -77,18 +81,18 @@ class MyAdapter(val context: Context, val list: ArrayList<Produkt>, val ref: Dat
         holder.binding.tvIlosc.text = list[position].ilosc
         holder.binding.cbKupione.isChecked = false
 
-        holder.binding.tvNazwa.setOnClickListener {
-            ref.orderByValue().equalTo(list[position].nazwa).addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    CoroutineScope(IO).launch {
-                        snapshot.children.iterator().next().ref.removeValue()
-                    }
-                }
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e("MyAdapter", "Failed to delete value", error.toException())
-                }
-            })
-        }
+//        holder.binding.tvNazwa.setOnClickListener {
+//            ref.orderByValue().equalTo(list[position].nazwa).addListenerForSingleValueEvent(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    CoroutineScope(IO).launch {
+//                        snapshot.children.iterator().next().ref.removeValue()
+//                    }
+//                }
+//                override fun onCancelled(error: DatabaseError) {
+//                    Log.e("MyAdapter", "Failed to delete value", error.toException())
+//                }
+//            })
+//        }
     }
     override fun getItemCount(): Int = list.size
 }
