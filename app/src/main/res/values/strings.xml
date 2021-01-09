@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MiniProject1</string>
+    <string name="addProduct">com.example.miniproject1.ADD_PRODUCT</string>
+</resources>

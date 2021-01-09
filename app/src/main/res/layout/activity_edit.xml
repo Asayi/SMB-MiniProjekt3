@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="236dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Edit list emelent"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_nazwaProdEd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="390dp"
+        android:ems="10"
+        android:hint="Nazwa produktu"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/et_iloscEd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="330dp"
+        android:ems="10"
+        android:hint="Ilosc"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/et_cenaEd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="270dp"
+        android:ems="10"
+        android:hint="Cena"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/bt_zapiszPoEd"
+        android:layout_width="175dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="175dp"
+        android:text="Zapisz"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_passedId"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="552dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="80dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="588dp"
+        android:text="ID: "
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_prodname"
+        android:layout_width="218dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginBottom="588dp"
+        android:text="Prod name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_editprodname"
+        android:layout_width="215dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginBottom="117dp"
+        app:layout_constraintBottom_toTopOf="@+id/et_nazwaProdEd"
+        app:layout_constraintStart_toEndOf="@+id/tv_passedId" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
