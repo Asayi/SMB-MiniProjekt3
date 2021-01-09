@@ -54,7 +54,7 @@ class ProductListActivity : AppCompatActivity() {
             )
         )
 
-        val list = arrayListOf<String>()
+        val list = arrayListOf<Produkt>()
         binding.rvList.adapter = MyAdapter(this, list, ref)
 
 //        binding.btDodusu.setOnClickListener {

@@ -14,14 +14,27 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MyAdapter(val context: Context, val list: ArrayList<String>, val ref: DatabaseReference) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(val context: Context, val list: ArrayList<Produkt>, val ref: DatabaseReference) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     init {
         ref.addChildEventListener(object : ChildEventListener {
+
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                var name: String
+                var price: String
+                var quantity: String
+                var kupiony: Boolean = false
+
                 CoroutineScope(IO).launch {
 
-                    list.add(snapshot.value as String)
+                    val produkt = Produkt(
+                        snapshot.child("nazwa").value as String,
+                        snapshot.child("cena").value as String,
+                        snapshot.child("ilosc").value as String,
+                        false
+                    )
+
+                    list.add(produkt)
                     withContext(Main) {
                         notifyDataSetChanged()
                     }
@@ -29,19 +42,19 @@ class MyAdapter(val context: Context, val list: ArrayList<String>, val ref: Data
             }
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 CoroutineScope(IO).launch {
-                    list.remove(snapshot.value as String)
-                    list.add(snapshot.value as String)
-                    withContext(Main) {
-                        notifyDataSetChanged()
-                    }
+//                    list.remove(snapshot.value as String)
+//                    list.add(snapshot.value as String)
+//                    withContext(Main) {
+//                        notifyDataSetChanged()
+//                    }
                 }
             }
             override fun onChildRemoved(snapshot: DataSnapshot) {
                 CoroutineScope(IO).launch {
-                    list.remove(snapshot.value as String)
-                    withContext(Main) {
-                        notifyDataSetChanged()
-                    }
+//                    list.remove(snapshot.value as String)
+//                    withContext(Main) {
+//                        notifyDataSetChanged()
+//                    }
                 }
             }
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
@@ -59,13 +72,13 @@ class MyAdapter(val context: Context, val list: ArrayList<String>, val ref: Data
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.binding.tvNazwa.text = list[position]
-        holder.binding.tvCena.text = list[position]
-        holder.binding.tvIlosc.text = list[position]
+        holder.binding.tvNazwa.text = list[position].nazwa
+        holder.binding.tvCena.text = list[position].cena
+        holder.binding.tvIlosc.text = list[position].ilosc
         holder.binding.cbKupione.isChecked = false
 
         holder.binding.tvNazwa.setOnClickListener {
-            ref.orderByValue().equalTo(list[position]).addListenerForSingleValueEvent(object : ValueEventListener {
+            ref.orderByValue().equalTo(list[position].nazwa).addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     CoroutineScope(IO).launch {
                         snapshot.children.iterator().next().ref.removeValue()
