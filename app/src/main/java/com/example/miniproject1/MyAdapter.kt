@@ -14,13 +14,14 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MyAdapter(val context: Context, val list: ArrayList<Produkt>, val ref: DatabaseReference) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(val context: Context, val list: ArrayList<String>, val ref: DatabaseReference) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     init {
         ref.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 CoroutineScope(IO).launch {
-                    list.add(snapshot.value as Produkt)
+
+                    list.add(snapshot.value as String)
                     withContext(Main) {
                         notifyDataSetChanged()
                     }
@@ -29,7 +30,7 @@ class MyAdapter(val context: Context, val list: ArrayList<Produkt>, val ref: Dat
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 CoroutineScope(IO).launch {
                     list.remove(snapshot.value as String)
-                    list.add(snapshot.value as Produkt)
+                    list.add(snapshot.value as String)
                     withContext(Main) {
                         notifyDataSetChanged()
                     }
@@ -58,13 +59,13 @@ class MyAdapter(val context: Context, val list: ArrayList<Produkt>, val ref: Dat
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.binding.tvNazwa.text = list[position].nazwa
-        holder.binding.tvCena.text = list[position].cena
-        holder.binding.tvIlosc.text = list[position].ilosc
+        holder.binding.tvNazwa.text = list[position]
+        holder.binding.tvCena.text = list[position]
+        holder.binding.tvIlosc.text = list[position]
         holder.binding.cbKupione.isChecked = false
 
         holder.binding.tvNazwa.setOnClickListener {
-            ref.orderByValue().equalTo(list[position].nazwa).addListenerForSingleValueEvent(object : ValueEventListener {
+            ref.orderByValue().equalTo(list[position]).addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     CoroutineScope(IO).launch {
                         snapshot.children.iterator().next().ref.removeValue()

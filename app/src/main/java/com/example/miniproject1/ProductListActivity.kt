@@ -54,7 +54,7 @@ class ProductListActivity : AppCompatActivity() {
             )
         )
 
-        val list = arrayListOf<Produkt>()
+        val list = arrayListOf<String>()
         binding.rvList.adapter = MyAdapter(this, list, ref)
 
 //        binding.btDodusu.setOnClickListener {
@@ -81,15 +81,15 @@ class ProductListActivity : AppCompatActivity() {
 
         binding.btDodusu.setOnClickListener {
 
-//            val produkt = Produkt (
-//                nazwa = binding.etNazwaprod.text.toString(),
-//                cena = binding.etCena.text.toString(),
-//                ilosc = binding.etIlosc.text.toString(),
-//                kupuony = binding.cbKupiony2.isChecked
-//            )
+            val produkt = Produkt (
+                nazwa = binding.etNazwaprod.text.toString(),
+                cena = binding.etCena.text.toString(),
+                ilosc = binding.etIlosc.text.toString(),
+                kupuony = binding.cbKupiony2.isChecked
+            )
 
             CoroutineScope(Dispatchers.IO).launch {
-                ref.push().setValue(binding.etNazwaprod.text.toString())
+                ref.push().setValue(produkt)
             }
         }
     }
